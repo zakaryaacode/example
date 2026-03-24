@@ -1,393 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L'Étoile | Premium 3D Menu</title>
-    
+    <title>3D Menu</title>
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
     <style>
-        /* Premium Dark Theme Variables */
-        :root {
-            --bg-base: #0a0a0c;
-            --bg-card: #141417;
-            --bg-model: #1a1a1d;
-            --text-primary: #f8f8f8;
-            --text-secondary: #a1a1aa;
-            --accent-gold: #d4af37;
-            --accent-hover: #f1c94b;
-            --border-color: rgba(255, 255, 255, 0.05);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-base);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        /* Header Styles */
-        header {
-            text-align: center;
-            padding: 5rem 2rem 3rem;
-            background: linear-gradient(180deg, rgba(20,20,23,0.8) 0%, var(--bg-base) 100%);
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 300;
-            letter-spacing: 4px;
-            color: var(--accent-gold);
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-        }
-
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            font-weight: 300;
-            letter-spacing: 1px;
-        }
-
-        /* Grid Layout */
-        .menu-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-            padding: 0 2rem 5rem;
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-
-        /* Card Styles */
-        .dish-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            overflow: hidden;
-            opacity: 0; /* For GSAP */
-            transform: translateY(40px); /* For GSAP */
-            transition: box-shadow 0.4s ease, border-color 0.4s ease;
+            background-color: #1a1a1a; /* Charcoal */
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
         }
 
-        .dish-card:hover {
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.05);
-            border-color: rgba(212, 175, 55, 0.2);
-        }
-
-        /* Model Viewer Styles */
-        .model-wrapper {
-            position: relative;
-            width: 100%;
-            height: 350px;
-            background-color: var(--bg-model);
-            border-bottom: 1px solid var(--border-color);
+        .card {
+            background: #262626;
+            border-radius: 15px;
+            padding: 10px;
+            border: 1px solid #d4af37; /* Gold */
+            width: 300px;
         }
 
         model-viewer {
             width: 100%;
-            height: 100%;
-            --poster-color: transparent;
-            outline: none;
+            height: 300px;
+            background-color: #121212;
+            border-radius: 10px;
         }
 
-        /* Info Section */
-        .dish-info {
-            padding: 2rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .dish-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-
-        .dish-title {
-            font-size: 1.25rem;
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-
-        .dish-price {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--accent-gold);
-        }
-
-        .dish-desc {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-        }
-
-        /* Custom AR Button */
-        .ar-btn {
-            background-color: rgba(212, 175, 55, 0.1);
-            color: var(--accent-gold);
-            border: 1px solid var(--accent-gold);
-            border-radius: 30px;
-            padding: 10px 24px;
-            font-size: 0.9rem;
-            font-weight: 600;
+        .ar-button {
+            background-color: #8b0000; /* Deep Red */
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            margin-top: 10px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(4px);
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            z-index: 10;
-        }
-
-        .ar-btn svg {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
-        }
-
-        .ar-btn:hover {
-            background-color: var(--accent-gold);
-            color: var(--bg-base);
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-        }
-
-        /* Loading Progress Bar */
-        .progress-bar {
-            display: block;
-            width: 40%;
-            height: 3px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            overflow: hidden;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .update-bar {
-            background-color: var(--accent-gold);
-            width: 0%;
-            height: 100%;
-            border-radius: 3px;
-            transition: width 0.3s ease;
-        }
-
-        .progress-bar.hide {
-            opacity: 0;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            .menu-container { padding: 0 1rem 3rem; gap: 1.5rem; }
-            .model-wrapper { height: 280px; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>L'Étoile</h1>
-        <p class="subtitle">Immersive Culinary Experience</p>
-    </header>
+    <div class="card">
+        <model-viewer 
+            src="w1.usdz" 
+            ios-src="W1.usdz" 
+            ar 
+            ar-modes="webxr scene-viewer quick-look" 
+            camera-controls 
+            poster="poster1.webp" 
+            shadow-intensity="1">
+            <button slot="ar-button" class="ar-button">عرض في واقعك المعزز (AR)</button>
+        </model-viewer>
+    </div>
 
-    <main class="menu-container" id="menu-grid">
-        </main>
+    <div class="card">
+        <model-viewer 
+            src="waffle-v1.glb" 
+            ar 
+            ar-modes="webxr scene-viewer quick-look" 
+            camera-controls 
+            poster="poster2.webp" 
+            shadow-intensity="1">
+            <button slot="ar-button" class="ar-button">عرض في واقعك المعزز (AR)</button>
+        </model-viewer>
+    </div>
 
-    <script>
-        // Configuration for 8 different variations of the same "waffle-v1.glb" model
-        // Using tone-mapping="neutral" and environment-image="neutral" to fix iOS Safari color washing out
-        const dishes = [
-            {
-                id: "dish-1",
-                title: "Classic Belgian Waffle",
-                price: "$14",
-                desc: "Golden perfection served with a light dust of powdered sugar. A timeless classic.",
-                orbit: "0deg 55deg auto",
-                target: "auto auto auto",
-                exposure: "1.0",
-                fov: "30deg",
-                shadowInt: "1.2"
-            },
-            {
-                id: "dish-2",
-                title: "Overhead Waffle View",
-                price: "$16",
-                desc: "Beautifully presented from above, highlighting the rich textures and deep pockets.",
-                orbit: "0deg 0deg auto",
-                target: "auto auto auto",
-                exposure: "1.1",
-                fov: "45deg",
-                shadowInt: "1.0"
-            },
-            {
-                id: "dish-3",
-                title: "Caramel Drizzle Macro",
-                price: "$18",
-                desc: "Close-up perspective to appreciate the intricate details of the golden crust.",
-                orbit: "-35deg 70deg 0.8m",
-                target: "0m 0.05m 0m",
-                exposure: "0.95",
-                fov: "25deg",
-                shadowInt: "1.8"
-            },
-            {
-                id: "dish-4",
-                title: "The Towering Waffle",
-                price: "$22",
-                desc: "A low-angle view showcasing the impressive height and volume of our signature stack.",
-                orbit: "90deg 85deg auto",
-                target: "auto auto auto",
-                exposure: "1.15",
-                fov: "35deg",
-                shadowInt: "0.8"
-            },
-            {
-                id: "dish-5",
-                title: "Dramatic Profile",
-                price: "$15",
-                desc: "High-contrast lighting emphasizing the crisp edges and deep waffle squares.",
-                orbit: "180deg 45deg auto",
-                target: "auto auto auto",
-                exposure: "1.3",
-                fov: "40deg",
-                shadowInt: "2.5"
-            },
-            {
-                id: "dish-6",
-                title: "Soft Studio Presentation",
-                price: "$17",
-                desc: "Presented in bright, diffused lighting for a clean, modern aesthetic.",
-                orbit: "-90deg 40deg auto",
-                target: "auto auto auto",
-                exposure: "1.05",
-                fov: "30deg",
-                shadowInt: "0.4"
-            },
-            {
-                id: "dish-7",
-                title: "Dynamic Corner Angle",
-                price: "$19",
-                desc: "An aggressive, dynamic angle capturing the glossy reflections perfectly.",
-                orbit: "135deg 65deg auto",
-                target: "auto auto auto",
-                exposure: "1.2",
-                fov: "35deg",
-                shadowInt: "1.5"
-            },
-            {
-                id: "dish-8",
-                title: "The Waffle Platter",
-                price: "$26",
-                desc: "Zoomed out to showcase the entire dish setting in all its culinary glory.",
-                orbit: "45deg 75deg 3m",
-                target: "auto auto auto",
-                exposure: "1.1",
-                fov: "50deg",
-                shadowInt: "1.2"
-            }
-        ];
-
-        const menuGrid = document.getElementById('menu-grid');
-
-        // Generate HTML for each dish
-        dishes.forEach(dish => {
-            const cardHTML = `
-                <article class="dish-card">
-                    <div class="model-wrapper">
-                        <model-viewer 
-                            src="burger-v1.glb"
-                            ar
-                            ar-modes="webxr scene-viewer quick-look"
-                            camera-controls
-                            auto-rotate
-                            rotation-per-second="10deg"
-                            interaction-prompt="none"
-                            loading="lazy"
-                            tone-mapping="neutral"
-                            environment-image="neutral"
-                            shadow-intensity="${dish.shadowInt}"
-                            shadow-softness="1.5"
-                            exposure="${dish.exposure}"
-                            camera-orbit="${dish.orbit}"
-                            camera-target="${dish.target}"
-                            field-of-view="${dish.fov}">
-                            
-                            <button slot="ar-button" class="ar-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path d="M21 16.5v2.25A2.25 2.25 0 0 1 18.75 21H5.25A2.25 2.25 0 0 1 3 18.75V16.5M21 7.5V5.25A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25V7.5M12 14.25v-10.5M8.25 7.5l3.75-3.75 3.75 3.75"/>
-                                </svg>
-                                View in AR
-                            </button>
-
-                            <div slot="progress-bar" class="progress-bar">
-                                <div class="update-bar"></div>
-                            </div>
-                        </model-viewer>
-                    </div>
-                    <div class="dish-info">
-                        <div class="dish-header">
-                            <h2 class="dish-title">${dish.title}</h2>
-                            <span class="dish-price">${dish.price}</span>
-                        </div>
-                        <p class="dish-desc">${dish.desc}</p>
-                    </div>
-                </article>
-            `;
-            menuGrid.insertAdjacentHTML('beforeend', cardHTML);
-        });
-
-        // Handle Loading Progress Bars
-        document.querySelectorAll('model-viewer').forEach(viewer => {
-            const bar = viewer.querySelector('.update-bar');
-            const progressContainer = viewer.querySelector('.progress-bar');
-            
-            viewer.addEventListener('progress', (e) => {
-                const progress = e.detail.totalProgress * 100;
-                bar.style.width = `${progress}%`;
-                
-                if (progress === 100) {
-                    setTimeout(() => {
-                        progressContainer.classList.add('hide');
-                    }, 300);
-                }
-            });
-        });
-
-        // GSAP Staggered Appearance Animation
-        window.addEventListener('load', () => {
-            gsap.to('.dish-card', {
-                y: 0,
-                opacity: 1,
-                duration: 0.8,
-                stagger: 0.15,
-                ease: 'power3.out',
-                delay: 0.2
-            });
-        });
-    </script>
 </body>
 </html>
