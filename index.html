@@ -59,15 +59,27 @@
     </div>
 
     <div class="card">
-        <model-viewer 
-            src="waffle-v1.glb" 
-            ar 
-            ar-modes="webxr scene-viewer quick-look" 
-            camera-controls 
-            poster="poster2.webp" 
-            shadow-intensity="1">
-            <button slot="ar-button" class="ar-button">عرض في واقعك المعزز (AR)</button>
-        </model-viewer>
+    <model-viewer 
+    src="waffle-v1.glb" 
+    ar 
+    ar-modes="webxr scene-viewer" 
+    camera-controls 
+    
+    tone-mapping="neutral" 
+    
+    exposure="1.5" 
+    
+    environment-image="neutral" 
+    
+    shadow-intensity="2" 
+    shadow-softness="0.5"
+    
+   interaction-prompt="none">
+    
+    <button slot="ar-button" class="ar-button">
+        عرض في واقعك المعزز (AR)
+    </button>
+</model-viewer>
     </div>
 
 </body>
