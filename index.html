@@ -3,77 +3,123 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>عرض ملفات 3D + AR</title>
+  <title>3D Cards with AR</title>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 20px;
-      padding: 20px;
       background-color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    .card {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      padding: 16px;
-      width: 300px;
+
+    h1 {
+      margin-bottom: 20px;
       text-align: center;
     }
+
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 15px;
+      text-align: center;
+    }
+
     model-viewer {
       width: 100%;
       height: 300px;
-      border-radius: 8px;
-      background-color: #e0e0e0;
+      border-radius: 10px;
+      background-color: #eaeaea;
     }
-    button.ar-button {
-      margin-top: 12px;
-      padding: 8px 16px;
-      border: none;
-      background-color: #007aff;
-      color: white;
-      border-radius: 6px;
-      cursor: pointer;
+
+    .card button {
+      margin-top: 10px;
+      padding: 10px 20px;
       font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .card button:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 600px) {
+      model-viewer {
+        height: 250px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- البطاقة الأولى -->
-  <div class="card">
-    <h3>الطبق 1</h3>
-    <model-viewer 
-      id="model1"
-      src="pizza1glb-v1.glb" 
-      ar 
-      ar-modes="webxr scene-viewer quick-look" 
-      camera-controls 
-      auto-rotate
-      interaction-prompt="none"
-      shadow-intensity="1">
-    </model-viewer>
-    <button class="ar-button" onclick="document.getElementById('model1').enterAR()">عرض AR</button>
+  <h1>نماذج 3D مع AR</h1>
+
+  <div class="cards-container">
+    <!-- البطاقة 1 -->
+    <div class="card">
+      <model-viewer 
+        src="pizza1glb-v1.glb" 
+        alt="Model 1" 
+        ar 
+        ar-modes="webxr scene-viewer quick-look"
+        camera-controls 
+        interaction-prompt="auto">
+      </model-viewer>
+      <button onclick="startAR(this)">عرض AR</button>
+    </div>
+
+    <!-- البطاقة 2 -->
+    <div class="card">
+      <model-viewer 
+        src="pizza-v1.glb" 
+        alt="Model 2" 
+        ar 
+        ar-modes="webxr scene-viewer quick-look"
+        camera-controls 
+        interaction-prompt="auto">
+      </model-viewer>
+      <button onclick="startAR(this)">عرض AR</button>
+    </div>
+
+    <!-- البطاقة 3 -->
+    <div class="card">
+      <model-viewer 
+        src="waffel-v5.glb" 
+        alt="Model 3" 
+        ar 
+        ar-modes="webxr scene-viewer quick-look"
+        camera-controls 
+        interaction-prompt="auto">
+      </model-viewer>
+      <button onclick="startAR(this)">عرض AR</button>
+    </div>
   </div>
 
-  <!-- البطاقة الثانية -->
-  <div class="card">
-    <h3>الطبق 2</h3>
-    <model-viewer 
-      id="model2"
-      src="waffel-v5.glb" 
-      ar 
-      ar-modes="webxr scene-viewer quick-look" 
-      camera-controls 
-      auto-rotate
-      interaction-prompt="none"
-      shadow-intensity="1">
-    </model-viewer>
-    <button class="ar-button" onclick="document.getElementById('model2').enterAR()">عرض AR</button>
-  </div>
+  <script>
+    function startAR(button) {
+      const viewer = button.previousElementSibling;
+      if (viewer && viewer.activateAR) {
+        viewer.activateAR();
+      }
+    }
+  </script>
 
 </body>
 </html>
