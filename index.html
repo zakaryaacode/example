@@ -1,72 +1,79 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Menu</title>
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
-    
-    <style>
-        body {
-            background-color: #1a1a1a; /* Charcoal */
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .card {
-            background: #262626;
-            border-radius: 15px;
-            padding: 10px;
-            border: 1px solid #3741d4; /* Gold */
-            width: 300px;
-        }
-
-        model-viewer {
-            width: 100%;
-            height: 300px;
-            background-color: #121212;
-            border-radius: 10px;
-        }
-
-        .ar-button {
-            background-color: #00ff84; /* Deep Red */
-            color: white;
-            border: none;
-            padding: 10px;
-            width: 100%;
-            border-radius: 5px;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عرض ملفات 3D + AR</title>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 16px;
+      width: 300px;
+      text-align: center;
+    }
+    model-viewer {
+      width: 100%;
+      height: 300px;
+      border-radius: 8px;
+      background-color: #e0e0e0;
+    }
+    button.ar-button {
+      margin-top: 12px;
+      padding: 8px 16px;
+      border: none;
+      background-color: #007aff;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
-    <div class="card">
+
+  <!-- البطاقة الأولى -->
+  <div class="card">
+    <h3>الطبق 1</h3>
     <model-viewer 
-    src="waffel-v5.glb" 
-    ar 
-    ar-modes="webxr scene-viewer" 
-    camera-controls 
-    
-    tone-mapping="neutral" 
-    
-    exposure="1.5" 
-    
-    environment-image="neutral" 
-    
-    shadow-intensity="2" 
-    shadow-softness="0.5"
-    
-   interaction-prompt="none">
-    
-    <button slot="ar-button" class="ar-button">
-        عرض في واقعك المعزز (AR)
-    </button>
-</model-viewer>
-    </div>
+      id="model1"
+      src="pizza1glb-v1.glb" 
+      ar 
+      ar-modes="webxr scene-viewer quick-look" 
+      camera-controls 
+      auto-rotate
+      interaction-prompt="none"
+      shadow-intensity="1">
+    </model-viewer>
+    <button class="ar-button" onclick="document.getElementById('model1').enterAR()">عرض AR</button>
+  </div>
+
+  <!-- البطاقة الثانية -->
+  <div class="card">
+    <h3>الطبق 2</h3>
+    <model-viewer 
+      id="model2"
+      src="waffel-v5.glb" 
+      ar 
+      ar-modes="webxr scene-viewer quick-look" 
+      camera-controls 
+      auto-rotate
+      interaction-prompt="none"
+      shadow-intensity="1">
+    </model-viewer>
+    <button class="ar-button" onclick="document.getElementById('model2').enterAR()">عرض AR</button>
+  </div>
 
 </body>
 </html>
